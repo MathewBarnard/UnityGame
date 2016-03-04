@@ -10,7 +10,7 @@ namespace Assets.CombatActions {
             get { return complete; }
             set { complete = value; }
         }
-        protected Hero      hero;
+        protected Combatant      combatant;
         protected string    combatantState;
         public string State {
             get { return combatantState; }
@@ -21,8 +21,8 @@ namespace Assets.CombatActions {
             get { return id; }
         }
 
-        protected void GetHeroRef() {
-            hero = this.gameObject.GetComponent<Hero>();
+        protected void StoreCombatantReference() {
+            combatant = this.gameObject.GetComponent<Combatant>();
         }
     }
 

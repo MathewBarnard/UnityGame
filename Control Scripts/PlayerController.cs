@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Assets.CombatActions;
 
 public class PlayerController : MonoBehaviour {
 
@@ -13,32 +14,37 @@ public class PlayerController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        if (Input.GetKey(KeyCode.W)) {
+        if (Input.GetMouseButtonDown(1))
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
 
-            focus.Move("Up");
-        }
+            if (Physics.Raycast(ray, out hit, LayerMask.GetMask("TerrainRaycast"))) {
 
-        if (Input.GetKey(KeyCode.A)) {
+                // The player has clicked the environment
+                if (hit.transform.gameObject.layer == LayerMask.NameToLayer("TerrainRaycast"))
+                {
+                    MoveToTarget combatAction = focus.gameObject.AddComponent<MoveToTarget>();
+                    combatAction.TargetLocation = hit.point;
+                    focus.Actions.SetAction(combatAction);
+                }
+                else if(hit.transform.gameObject.tag == "Enemy") {
+                    Debug.Log("Enemy clicked");
+                    
+                    // Attach the script to move towards the target combatant
+                    MoveToCombatant combatAction = focus.gameObject.AddComponent<MoveToCombatant>();
+                    combatAction.Target = hit.transform.gameObject.GetComponent<Enemy>();
+                    focus.Actions.SetAction(combatAction);
 
-            focus.Move("Left");
-        }
-
-        if (Input.GetKey(KeyCode.S)) {
-
-            focus.Move("Down");
-        }
-
-        if (Input.GetKey(KeyCode.D)) {
-
-            focus.Move("Right");
-        }
-
-        if (Input.GetKeyDown(KeyCode.Q)) {
-            focus.UseAbility("Q");
-        }
-
-        if (Input.GetKeyDown(KeyCode.E)) {
-            focus.UseAbility("E");
+                    // Attach the script that will cause the player to attack after he has arrived at the target
+                    Attack attackAction = focus.gameObject.AddComponent<Attack>();
+                    attackAction.enabled = false;
+                    attackAction.SetTarget(hit.transform.gameObject.GetComponent<Enemy>());
+                    focus.Actions.AddAction(attackAction);
+                }
+                // The player has clicked an enemy
+                
+            }
         }
     }
 }

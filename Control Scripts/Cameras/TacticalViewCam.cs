@@ -19,7 +19,7 @@ namespace Assets.Control_Scripts.Cameras {
 
         public void update() {
 
-            float cameraSmoothing = Vector3.Magnitude(mainCamera.transform.position - cameraAnchor.transform.position) * Time.deltaTime;
+            float cameraSmoothing = (Vector3.Magnitude(mainCamera.transform.position - cameraAnchor.transform.position) * Time.deltaTime) * 5.0f;
             mainCamera.transform.position = Vector3.MoveTowards(mainCamera.transform.position, cameraAnchor.transform.position, cameraSmoothing);
         }
     }

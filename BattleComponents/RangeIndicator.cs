@@ -12,7 +12,7 @@ public class RangeIndicator : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        range = this.GetComponent<Hero>().Range;
+        range = this.GetComponent<Hero>().BaseStats.Range;
         sphere = this.GetComponent<SphereCollider>();
         sphere.radius = range;
         sphere.isTrigger = true;

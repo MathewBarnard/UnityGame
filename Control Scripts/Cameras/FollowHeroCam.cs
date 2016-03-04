@@ -21,24 +21,11 @@ namespace Assets.Control_Scripts.Cameras {
 
         public void update() {
 
-            string direction = hero.GetComponent<Hero>().DirectionFaced;
-            float offset = 0.5f;
-
-            if (direction.Equals("Left")) {
-                offset *= -1;
-            }
-
-            cameraAnchor.transform.position = new Vector3(hero.transform.position.x, hero.transform.position.y + 4.0f, hero.transform.position.z - 3.0f);
+            cameraAnchor.transform.position = new Vector3(hero.transform.position.x, hero.transform.position.y + 5.0f, - 5.0f);
 
             float distance = Vector3.Magnitude(mainCamera.transform.position - cameraAnchor.transform.position);
 
-            Vector3 dir = Vector3.Normalize(mainCamera.transform.position - cameraAnchor.transform.position);
-
-            Vector3 halfwayPoint = dir * distance;
-
-            float cameraSmoothing = (Vector3.Magnitude(mainCamera.transform.position - cameraAnchor.transform.position) * Time.deltaTime) / 3.0f;
-
-            mainCamera.transform.position = Vector3.MoveTowards(mainCamera.transform.position, halfwayPoint, cameraSmoothing);
+            mainCamera.transform.position = Vector3.MoveTowards(mainCamera.transform.position, cameraAnchor.transform.position, (distance * Time.deltaTime) * 5.0f);
         }
     }
 }

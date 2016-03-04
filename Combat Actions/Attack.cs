@@ -13,7 +13,7 @@ namespace Assets.CombatActions {
         private Combatant target;
 
         void Awake() {
-            GetHeroRef();
+            StoreCombatantReference();
             AttachController();
             id = AnimationState.Attacking;
         }
@@ -28,8 +28,6 @@ namespace Assets.CombatActions {
         }
 
         public void TriggerEvent() {
-            Debug.Log("Lmao");
-            target.GetComponent<Rigidbody>().isKinematic = false;
             target.GetComponent<Rigidbody>().AddForce(new Vector3(-100.0f, 100.0f, 0.0f));
         }
 

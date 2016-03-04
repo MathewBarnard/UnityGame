@@ -32,12 +32,12 @@ namespace Assets.BattleComponents {
 
             if (actions.Count > 0) {
                 if (actions.Peek().Complete == true) {
-                    Debug.Log("HELLO");
                     CombatAction action = actions.Dequeue();
                     Destroy(action);
 
                     // Enable the next action in the queue
-                    actions.Peek().enabled = true;
+                    if(actions.Count > 0)
+                        actions.Peek().enabled = true;
                 }
 
             }

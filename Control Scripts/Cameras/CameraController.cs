@@ -9,7 +9,9 @@ public class CameraController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        currentBehaviour = new FollowHeroCam(GameObject.Find("Hero"), GameObject.Find("Main Camera Base"));
+        //currentBehaviour = new FollowHeroCam(GameObject.Find("Hero"), GameObject.Find("Main Camera Base"));
+
+        currentBehaviour = new TacticalViewCam();
 	}
 	
 	// Update is called once per frame
